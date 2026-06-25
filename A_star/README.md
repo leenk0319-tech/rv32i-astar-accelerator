@@ -1,29 +1,36 @@
-# A* Algorithm Work
+# A* Reference Model
 
-This folder contains A* pathfinding reference code for the accelerator side of the SoC project.
+This folder contains my software reference model for the future A* pathfinding accelerator.
 
-## Purpose
-
-The software A* implementation is the behavioral reference for the future hardware accelerator.
-
-Planned use:
-
-1. Validate the algorithm in C first.
-2. Decide the hardware/software boundary.
-3. Convert the expensive parts of A* into an accelerator datapath.
-4. Expose the accelerator to the RV32I CPU through MMIO.
-
-## Current Files
+## Files
 
 | File | Role |
 |---|---|
-| `A_star.c` | Initial A* reference implementation |
+| `astar.c` | Hardware-friendly A* reference model |
+| `SOURCES.md` | Algorithm references and attribution notes |
 
-## Future Hardware Direction
+## Design Direction
 
-- Grid/map memory layout definition
-- Open list / priority selection strategy
-- Neighbor expansion datapath
-- Cost update logic
-- MMIO register map for CPU control
+The reference model is intentionally simple and hardware-aware:
+
+- 2D grid
+- 4-direction movement
+- Manhattan heuristic
+- static arrays only
+- no malloc
+- no recursion
+- no floating point
+- stable `find_min_node()` boundary for future accelerator replacement
+
+The goal is to use this C model as the golden reference before implementing the accelerator datapath.
+
+## Future Accelerator Split
+
+Likely hardware acceleration target:
+
+```text
+find_min_node(open_set, open_count)
+```
+
+This step is repeatedly used to select the next node with the smallest `f = g + h` score, making it a natural first accelerator candidate.
 

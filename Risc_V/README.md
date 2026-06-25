@@ -1,42 +1,67 @@
-# RISC-V CPU Work
+# RISC-V CPU
 
-This folder contains the RV32I CPU implementation history for the FPGA SoC project.
+This folder contains my RV32I CPU work for the A* accelerator SoC project.
 
-## Folder Map
+## Structure
 
-| Folder | Description |
+| Path | Role |
 |---|---|
-| `6_23/` | Initial single-cycle style CPU experiment and basic register writeback simulation |
-| `6_24_25/` | Current 5-stage pipeline implementation with branch flush verification |
-| `Ryu/` | Reference/study materials and external pipeline examples |
+| `6_24_25/` | Current active 5-stage pipeline CPU implementation |
+| `6_23/` | Earlier first bring-up work kept as a development checkpoint |
+| `reports/` | Daily reports and portfolio PDFs/DOCX files |
 
-## Current Main Design
+The old `Ryu/` reference folder was removed because it was not my own implementation.
 
-Use `Risc_V/6_24_25/` as the current working design.
+## Current Active Design
+
+Use this folder for current simulation work:
+
+```text
+Risc_V/6_24_25/
+```
 
 Important files:
 
-- `cpu_core.v`: top-level CPU datapath wiring
-- `imem.v`: instruction memory using `$readmemh`
-- `reg_file.v`: 32-register file with x0 fixed to zero
-- `imm_gen.v`: RV32I immediate generator
-- `Control.v`: main control signal generation
-- `alu_controller.v`: ALU operation decode
-- `alu.v`: arithmetic, logic, and branch compare logic
-- `PC.v`: next PC selection
-- `bta.v`: branch target address calculation
-- `IF_ID_reg.v`, `ID_EX_reg.v`, `EX_MEM_reg.v`, `MEM_WB_reg.v`: pipeline registers
-- `program.hex`: branch verification program
-- `tb_branch_nohazard.v`: Questa testbench
+| File | Role |
+|---|---|
+| `cpu_core.v` | Top-level CPU datapath wiring |
+| `imem.v` | Instruction memory using `$readmemh` |
+| `reg_file.v` | 32-register file with x0 fixed to zero |
+| `imm_gen.v` | RV32I immediate generator |
+| `Control.v` | Main control signal generation |
+| `alu_controller.v` | ALU operation decode |
+| `alu.v` | Arithmetic/logic operations and branch compare |
+| `PC.v` | Next PC selection |
+| `bta.v` | Branch target address calculation |
+| `IF_ID_reg.v` | IF/ID pipeline register with NOP flush |
+| `ID_EX_reg.v` | ID/EX pipeline register with bubble flush |
+| `EX_MEM_reg.v` | EX/MEM pipeline register |
+| `MEM_WB_reg.v` | MEM/WB pipeline register |
+| `dmem.v` | Simple data memory model |
+| `program.hex` | Branch verification instruction image |
+| `tb_branch_nohazard.v` | Questa branch flush testbench |
 
-## Verified Behavior
+## Verified Test
 
-The current branch test checks:
+The current branch flush test checks:
 
 - BEQ taken flush
-- BNE not taken fall-through
+- BNE not-taken fall-through
 - BLT taken flush
 - BGE taken flush
 
-The test intentionally avoids RAW hazards by inserting NOP instructions.
+The test intentionally avoids RAW hazards by inserting NOPs because forwarding/stall logic is not implemented yet.
+
+Expected output:
+
+```text
+PASS: branch taken/not-taken flush test without RAW hazards
+```
+
+## Current Limitations
+
+- No forwarding unit yet
+- No load-use stall unit yet
+- JAL/JALR datapath is not complete yet
+- MMIO bus and A* accelerator integration are planned, not implemented
 

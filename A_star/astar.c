@@ -1,6 +1,14 @@
 /*
  * Static-array A* reference model for a RISC-V + MMIO accelerator project.
  *
+ * References:
+ * - Hart, Nilsson, Raphael, "A Formal Basis for the Heuristic
+ *   Determination of Minimum Cost Paths", 1968.
+ * - Amit J. Patel, "Introduction to the A* Algorithm", Red Blob Games.
+ *
+ * This file is a project-specific implementation. No third-party source code
+ * is copied into this repository.
+ *
  * Design goals:
  * - 2D grid only
  * - 4-direction movement only
