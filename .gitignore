@@ -1,0 +1,46 @@
+# Questa / ModelSim generated files
+work/
+**/work/
+transcript
+vsim.wlf
+*.wlf
+*.qdb
+*.qtl
+*.qpg
+*_vmake
+_info
+
+# Quartus generated files
+db/
+incremental_db/
+output_files/
+simulation/
+*.qws
+*.bak
+*.rpt
+*.summary
+*.sof
+*.pof
+*.jdi
+
+# Vivado generated files
+*.cache/
+*.hw/
+*.ip_user_files/
+*.sim/
+*.runs/
+*.xpr
+*.jou
+*.log
+
+# Local/editor/cache files
+.codex_tmp/
+.agents/
+.codex/
+.vscode/
+*.tmp
+*.swp
+Thumbs.db
+
+# External/reference PDFs should not be committed unless intentionally authored
+Risc_V/Ryu/CompanionAsset_*.pdf
