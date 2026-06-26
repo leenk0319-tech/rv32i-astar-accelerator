@@ -6,8 +6,8 @@ This folder contains my RV32I CPU work for the A* accelerator SoC project.
 
 | Path | Role |
 |---|---|
-| `6_24_25/` | Current active 5-stage pipeline CPU implementation |
-| `6_23/` | Earlier first bring-up work kept as a development checkpoint |
+| `code_6_24_25/` | Current active 5-stage pipeline CPU implementation |
+| `code_6_23/` | Earlier first bring-up work kept as a development checkpoint |
 | `reports/` | Daily reports and portfolio PDFs/DOCX files |
 
 The old `Ryu/` reference folder was removed because it was not my own implementation.
@@ -17,7 +17,7 @@ The old `Ryu/` reference folder was removed because it was not my own implementa
 Use this folder for current simulation work:
 
 ```text
-Risc_V/6_24_25/
+Risc_V/code_6_24_25/
 ```
 
 Important files:
@@ -64,4 +64,3 @@ PASS: branch taken/not-taken flush test without RAW hazards
 - No load-use stall unit yet
 - JAL/JALR datapath is not complete yet
 - MMIO bus and A* accelerator integration are planned, not implemented
-
