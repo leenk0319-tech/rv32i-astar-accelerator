@@ -40,6 +40,8 @@ simulation/
 .vscode/
 *.tmp
 *.swp
+*.exe
+*.zip
 Thumbs.db
 
 # External/reference PDFs should not be committed unless intentionally authored

@@ -31,35 +31,37 @@ Everything else from the earlier mixed layout was removed or moved into these tw
 Active design:
 
 ```text
-Risc_V/6_24_25/
+Risc_V/code_6_27-7_01/
 ```
 
 Verified so far:
 
-- 5-stage pipeline skeleton: IF / ID / EX / MEM / WB
-- Instruction memory loaded from `program.hex`
+- 5-stage pipeline: IF / ID / EX / MEM / WB
+- Instruction memory loaded from hex test programs
 - Register file with x0 fixed to zero
-- Immediate generation
-- Main control and ALU control
-- ALU subset and branch comparison
-- Branch target address calculation
-- EX-stage branch decision
-- IF/ID and ID/EX flush on branch taken
-- Questa branch taken/not-taken testbench
+- Immediate generation for I/S/B/U/J formats
+- Main control, ALU control, and writeback result selection
+- ALU subset: ADD, SUB, AND, OR, XOR, SLL and immediate variants
+- Load/store data memory path: LW, SW
+- LUI writeback path
+- JAL/JALR jump target and PC+4 link writeback
+- ID-stage branch decision and IF/ID flush
+- EX forwarding and load-use stall handling
+- Final integrated Questa testbench
 
 Latest passing test:
 
 ```text
-PASS: branch taken/not-taken flush test without RAW hazards
+PASS: final integrated pipeline proof - ALU, LUI, jumps, branches, load-use, forwarding, LW/SW
 ```
 
 Run it in Questa:
 
 ```tcl
-cd D:/Programs/vscode_workspace/Soc_Project/Risc_V/6_24_25
+cd D:/Programs/vscode_workspace/Soc_Project
 vlib work
-vlog -sv *.v
-vsim tb_branch_nohazard
+vlog Risc_V/code_6_27-7_01/*.v
+vsim work.tb_final_pipeline_proof
 run -all
 ```
 
@@ -98,16 +100,11 @@ Risc_V/reports/
 
 Current portfolio report:
 
-- `Risc_V/reports/26_06_25/2026-06-25.md`
-- `Risc_V/reports/26_06_25/2026-06-25_RV32I_pipeline_branch_flush.docx`
-- `Risc_V/reports/26_06_25/2026-06-25_RV32I_pipeline_branch_flush.pdf`
+- `Risc_V/reports/26_07_01/7_2_RV32I_pipeline_CPU_final_report.pdf`
 
 ## Next Milestones
 
-1. Add `LW/SW` data memory verification.
-2. Add forwarding logic for ALU-ALU RAW hazards.
-3. Add stall logic for load-use hazards.
-4. Complete JAL/JALR datapath behavior.
-5. Define the MMIO register map for the A* accelerator.
-6. Connect the A* accelerator prototype to the RV32I system.
-
+1. Freeze the RV32I CPU core as the baseline CPU for this project.
+2. Define the MMIO register map for the A* accelerator.
+3. Implement the open-list minimum-selection accelerator block.
+4. Connect the accelerator prototype to the RV32I system.
